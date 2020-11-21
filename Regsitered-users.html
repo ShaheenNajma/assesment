@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Form</title>
+    <link rel="stylesheet"  href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <style type="text/css">
+        table {
+            border: 1px solid #000;
+            padding: 10px;
+            width: 100%;
+        }
+        td p label{
+            vertical-align: top;
+        }
+        td p input, td p textarea, td p select {
+            width: 40%;
+        }
+        #datatable tbody tr td {
+            text-align: center;
+        }
+    </style>
+</head>
+<body> 
+    
+    <div class="container">
+        <h1>Registration Form</h1> 
+        <hr> <br>
+    <table>
+        <tr>
+            <td colspan="2">
+                <form  id="form-data">
+            </td>
+        </tr>        
+        <tr>
+            <td>
+                <p><label for="First Name"><b>First Name</b></label>
+                <input type="text" name="FirstName" id="FirstName" required></p>
+            </td>
+            <td>
+                <p><label for="Address"><b>Address</b></label>
+                <textarea rows="4" cols="20" type="text" name="Address" id="Address" required></textarea></p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <p><label for="Last Name"><b>Last Name</b></label>
+                <input type="text" name="LastName" id="LastName" required></p>
+            </td>
+            <td>
+                <p><label for ="country"><b>Country</b></label>
+                <select name="country" id="country">
+                    <option value="" selected="selected" placeholder="country" disabled="disabled">Country</option>
+                    <option value="1">India</option>
+                    <option value="2">Malaysia</option>
+                    <option value="2">USA</option>
+                    <option value="2">UK</option>
+                </select></p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <p><label for="Email"><b>Email</b></label>
+                <input type="email" name="Email" id="Email" required></p>
+            </td>
+            <td>
+                <p><label for ="State"><b>State</b></label>
+                <select name="State" id="State">
+                    <option value="" selected="selected" placeholder="state" disabled="disabled">State</option>
+                    <option value="1">Karnataka</option>
+                    <option value="2">Goa</option>
+                    <option value="2">Taminadu</option>
+                    <option value="2">Kochi</option>
+                </select></p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <p><label for="DOB"><b>DOB</b></label>
+                <input type="date" name="DOB" id="DOB" required></p>
+            </td>
+            <td>
+                <p><label for="Zip"><b>Zip</b></label>
+                <input type="text" name="zipcode" id="zipcode"></p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <p><label for="Phone"><b>Phone</b></label>
+                <input type="number" name="phone_number[]" id="phone_number" class="phone_number" pattern="^\d(7|8|9)/{9}\" required = "required"><button type="button" id="Add">+</button>                <button type="button" id="Remove"><i class="fa fa-trash" ></i></button>
+            </p>
+                <div id="textboxDiv">  </div>
+                
+            </td>
+            <td>
+                <input type="reset" value="Reset">
+                <button type="button" id="submit" onclick="updatedata();">Add</button>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                </form>
+            </td>
+        </tr>   
+           
+        <!-- </div> -->
+      
+        
+    </table>
+        <table id="datatable" class="table table-bordered table-condensed table-striped">
+                <thead>
+                    <tr>
+                        <th><input type="checkbox" /></th>
+                        <th>Name</th>
+                        <th>Email Address</th>
+                        <th>Date of birth</th>
+                        <th>Phone no(s)</th>
+                        <th>Address</th>
+                        <th>State</th>
+                        <th>Country</th>
+                        <th>Zipcode</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- <tr>
+                        <td><input type="checkbox" /></td>
+                        <td><p id="name"></p></td>
+                        <td><p id="email"></p></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr> -->
+                </tbody>
+                </div>
+            </table>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> 
+            <script>  
+                $(document).ready(function() {  
+                    $("#Add").on("click", function() {  
+                    $("#textboxDiv").append("<p class='newinput'><label for='Phone'><b>Phone </b></label><input type='number' name='phone_number[]' id='phone_number' class='phone_number' pattern='^\d{3}-\d{3}-\d{4}$' required></p>");  
+                    });  
+                    $("#Remove").on("click", function() {  
+                    $(".newinput").last().remove();  
+                    });  
+                });  
+            </script>
+            <script>
+                $(document).ready(function() { 
+
+                    
+                    populatedata();
+                    // $('#form-data').on("submit", function(event) {
+                        // event.preventDefault();
+                        // var formValues = $(this).serialize();
+                        
+                        // alert(formValues);
+                    
+                });
+                function updatedata(){
+                        
+                        if ($("#FirstName").val() != null && $("#FirstName").val() != '') {
+                            // Add product to Table
+                            productAddToTable();
+
+                            // Clear form fields
+                            formClear();
+
+                            // Focus to product name field
+                            $("#FirstName").focus();
+
+                            
+                        }
+                    // });
+                }
+
+                // function 
+                function productAddToTable() {
+                    // First check if a <tbody> tag exists, add one if not
+                    if ($("#datatable tbody").length == 0) {
+                        $("#datatable").append("<tbody></tbody>");
+                    }
+                    var inputs = document.getElementsByClassName( 'phone_number' ),
+                                numbers  = [].map.call(inputs, function( input ) {
+                                    return input.value;
+                                }).join( ', ' );
+
+                            // alert(numbers);
+
+                      localStorage.setItem("fname", $("#FirstName").val());
+                      localStorage.setItem("lname", $("#LastName").val());
+                      localStorage.setItem("email", $("#Email").val());
+                      localStorage.setItem("dob", $("#DOB").val());
+                      localStorage.setItem("phone", numbers);
+                      localStorage.setItem("address", $("#Address").val());
+                      localStorage.setItem("country", $("#country").val());
+                      localStorage.setItem("state", $("#State").val());
+                      localStorage.setItem("zip", $("#zipcode").val());
+                    
+                    populatedata();
+                }
+
+                function populatedata(){
+                    var country = "";
+                    if(localStorage.getItem("country") == 1){
+                        country = "India";
+                    }
+                    else if(localStorage.getItem("country") == 2){
+                        country = "Malaysia";
+                    }
+                    else if(localStorage.getItem("country") == 3){
+                        country = "USA";
+                    }
+                    else if(localStorage.getItem("country") == 4){
+                        country = "UK";
+                    }
+                
+                    var state = "";
+                    if(localStorage.getItem("state") == 1){
+                        state = "Karnataka";
+                    }
+                    else if(localStorage.getItem("state") == 2){
+                        state = "Goa";
+                    }
+                    else if(localStorage.getItem("state") == 3){
+                        state = "Tamilnadu";
+                    }
+                    else if(localStorage.getItem("state") == 4){
+                        state = "Kochi";
+                    }
+                 
+                         
+                    $("#datatable tbody").append("<tr>" +
+                    "<td>" + "<input type='checkbox' />" + "</td>" +
+                    "<td>" + localStorage.getItem("fname") + ' ' + localStorage.getItem("lname") + "</td>" +
+                    "<td>" + localStorage.getItem("email") + "</td>" +
+                    "<td>" + localStorage.getItem("dob") + "</td>" +
+                    "<td>" + localStorage.getItem("phone") + "</td>" +
+                    "<td>" + localStorage.getItem("address") + "</td>" +
+                    "<td>" + state + "</td>" +
+                    "<td>" + country + "</td>" +
+                    "<td>" + localStorage.getItem("zip") + "</td>" +
+                    "<td>" + "<button type='button' onclick='productDelete(this);' class='btn btn-default'>" + "<span class='fa fa-remove' />" + "</td>" +
+                    "</tr>");
+                }
+
+                function formClear() {
+                    $("#FirstName").val("");
+                    $("#LastName").val("");
+                    $("#Email").val("");
+                    $("#DOB").val("");
+                    // $("#phone_number").val("");
+                }
+
+                function productDelete(ctl) {
+                    $(ctl).parents("tr").remove();
+                }
+                
+                </script>
+</body>
+</html>
